@@ -55,8 +55,7 @@ bonus			:		all
 $(NAME)			:		${OBJS}
 						@echo "\n\033[0;32m[compiling ok] \033[0m"
 						@$(CC) $(FLAGS) $(MLX) -o ${NAME} ${OBJS}
-						@echo "\n\033[1;31m Export:\033[0m" $(notdir $(OBJS)) "to :\033[0;32msrcs/obj\033[0m"
-						@cp $(OBJS) ./srcs/obj			
+						@echo "\n\033[1;31m Export:\033[0m" $(notdir $(OBJS)) "to :\033[0;32msrcs/obj\033[0m"		
 
 clean			:		
 						@echo "\n\033[0;34m[clean " $(notdir $(OBJS))"]"

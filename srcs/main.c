@@ -34,8 +34,10 @@ void	run_game(t_cub *c)
 	void	*window_id;
 
 	mlx_id = mlx_init();
-	window_id = mlx_new_window(mlx_id, 500, 500, "test");
+	window_id = mlx_new_window(mlx_id, 1950, 1600, "test");
+	mlx_mouse_hide();
 	mlx_loop(window_id);
+	mlx_destroy_window(mlx_id, window_id);
 	c->id = window_id;
 }
 
@@ -52,7 +54,7 @@ int		main(int ac, char *av[])
 		put_error(3);
 	c->map = mapping(info_map(c, fd), av[1]);
 	//ft_print_map(c);
-	//run_game(c);
+	run_game(c);
 	free_struct(c);
 	return (0);
 }

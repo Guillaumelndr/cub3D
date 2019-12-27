@@ -47,10 +47,11 @@ int		size_texture(char *line_inf)
 	return (i + 1);
 }
 
-char	*add_texture_info(char *info)
+char	*add_texture_info(char **info)
 {
 	int			j;
 	int			x;
+	static int	y = 0;
 	char		*tmp;
 
 	x = 0;
@@ -58,23 +59,24 @@ char	*add_texture_info(char *info)
 	tmp = NULL;
 	while (!tmp)
 	{
-		while (ft_isalpha(info[j]))
+		while (ft_isalpha(info[y][j]))
 			j++;
-		j = (j == 2) ? size_texture(info) : 0;
+		j = (j == 2) ? size_texture(info[y]) : 0;
 		if (j)
 		{
 			if(!(tmp = malloc(sizeof(char) * j)))
 				put_error(3);
 			j = 0;
-			while (ft_isalpha(info[j]))
-				tmp[x++] = info[j++];
-			while (info[j] == ' ')
+			while (info[y][j] && ft_isalpha(info[y][j]))
+				tmp[x++] = info[y][j++];
+			while (info[y][j] && info[y][j] == ' ')
 				j++;
-			while (info[j] != ' ')
-				tmp[x++] = info[j++];
+			while (info[y][j] && info[y][j] != ' ')
+				tmp[x++] = info[y][j++];
 			tmp[x] = '\0';
-			j++;
+			j = 0;
 		}
+		y++;
 	}
 	return (tmp);
 }
@@ -83,11 +85,11 @@ void	pars_info(t_cub *c, char **info)
 {
 	int		i;
 
-	i = 0;
+	i = -1;
 	if(!(c->texture = malloc(sizeof(char *) * 5)))
 		put_error(3);
-	while (i++ != 4)
-		c->texture[i] = add_texture_info(info[i]);
+	while (++i != 4)
+		c->texture[i] = add_texture_info(info);
 	c->texture[4] = NULL;
 	free_info(info);
 }
